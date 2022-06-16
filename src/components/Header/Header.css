@@ -1,0 +1,9 @@
+.header-bgn {
+    background-color: rgb(51, 76, 158);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
