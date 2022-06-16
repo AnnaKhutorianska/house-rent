@@ -3,10 +3,20 @@ import AppartmentCard from '../AppartmentCard/AppartmentCard';
 
 import './AppartmentsList.css';
 
-function AppartmentsList({ appartments }) {
+function AppartmentsList({ appartments, selectedAppartment}) {
+	function sortAppartments() {
+		if(selectedAppartment) {
+			const sortedList = appartments.filter(apart => apart.id !== selectedAppartment);
+			const findedAppart = appartments.find(apart => apart.id === selectedAppartment);
+			return [findedAppart, ...sortedList]
+		}
+
+		return appartments;
+	}
+	
 	return (
 		<div className='appartments-list'>
-			{appartments.map(appartment => (
+			{sortAppartments().map(appartment => (
 				<AppartmentCard appartment={appartment} />
 			))}
 		</div>

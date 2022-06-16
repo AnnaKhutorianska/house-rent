@@ -7,14 +7,17 @@ const containerStyle = {
 };
 
 const center = {
-	lat: 50.450001,
-	lng: 30.523333,
+	lat: 50.4446159,
+	lng: 30.5172036,
 };
 
-function Map({ appartments }) {
+const green_marker = 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png';
+const blue_marker = 'http://maps.google.com/mapfiles/kml/paddle/blu-blank.png';
+
+function Map({ appartments, handleClick, selectedAppartment }) {
 	const { isLoaded } = useJsApiLoader({
 		id: 'google-map-script',
-		googleMapsApiKey: 'AIzaSyApkTyMro811OVJvs9Y5pktnFZWTPeHsA8',
+		googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY,
 	});
 
 	const [map, setMap] = React.useState(null);
@@ -33,13 +36,23 @@ function Map({ appartments }) {
 		<GoogleMap
 			mapContainerStyle={containerStyle}
 			center={center}
-			zoom={10}
+			zoom={13}
 			onLoad={onLoad}
 			onUnmount={onUnmount}
 		>
 			{/* Child components, such as markers, info windows, etc. */}
-			<Marker position={{ lat: 50.44163, lng: 30.5148065 }} />
-      {appartments.map(appartment => <Marker key={appartment.key} position={{ lat: appartment.coordinates.lat, lng: appartment.coordinates.lng }}/>)}
+			{appartments.map(appartment => (
+				<Marker
+					icon={appartment.id === selectedAppartment ? blue_marker : green_marker}
+					key={appartment.key}
+					position={
+						{
+							lat: appartment.coordinates.lat, 
+							lng: appartment.coordinates.lng
+						}
+					}
+					onClick={handleClick.bind(null, appartment.id)}
+				/>))}
 			<></>
 		</GoogleMap>
 	) : (
