@@ -1,46 +1,71 @@
-import React from 'react';
+import React , { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
-const containerStyle = {
-	height: '480px',
-	flex: 12,
-};
+import './GoogleMap.css';
 
 const center = {
-	lat: 50.4446159,
-	lng: 30.5172036,
+	lat: 50.438964,
+	lng: 30.5158093,
 };
 
 const green_marker = 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png';
-const blue_marker = 'http://maps.google.com/mapfiles/kml/paddle/blu-blank.png';
+const blue_marker  = 'http://maps.google.com/mapfiles/kml/paddle/blu-blank.png';
 
-function Map({ appartments, handleClick, selectedAppartment }) {
+function Map({ appartments, handleClick, selectedAppartment, setMapBounds }) {
 	const { isLoaded } = useJsApiLoader({
 		id: 'google-map-script',
-		googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY,
+		googleMapsApiKey: '',
 	});
 
-	const [map, setMap] = React.useState(null);
+	const [map, setMap] = useState(null);
 
-	const onLoad = React.useCallback(function callback(map) {
+	const onLoad = useCallback(map =>  {
 		const bounds = new window.google.maps.LatLngBounds(center);
 		map.fitBounds(bounds);
 		setMap(map);
+
+		let swPoint = bounds.getSouthWest();
+		let nePoint = bounds.getNorthEast();
+		let swLat = swPoint.lat();
+		let swLng = swPoint.lng();
+		let neLat = nePoint.lat();
+		let neLng = nePoint.lng();
+
+		setMapBounds({swLat, swLng, neLat, neLng})
 	}, []);
 
-	const onUnmount = React.useCallback(function callback(map) {
+	const onUnmount = useCallback(() => {
 		setMap(null);
 	}, []);
 
 	return isLoaded ? (
 		<GoogleMap
-			mapContainerStyle={containerStyle}
-			center={center}
-			zoom={13}
+			mapContainerClassName='map-container'
+			defaultCenter={center}
+			zoom={10}
 			onLoad={onLoad}
 			onUnmount={onUnmount}
+			onDragEnd={() => {
+				let bounds = map?.getBounds();
+				let swPoint = bounds?.getSouthWest();
+				let nePoint = bounds?.getNorthEast();
+				let swLat = swPoint?.lat();
+				let swLng = swPoint?.lng();
+				let neLat = nePoint?.lat();
+				let neLng = nePoint?.lng();
+				setMapBounds({swLat, swLng, neLat, neLng})
+			}}
+			onZoomChanged={() => {
+				let bounds = map?.getBounds();
+				let swPoint = bounds?.getSouthWest();
+				let nePoint = bounds?.getNorthEast();
+				let swLat = swPoint?.lat();
+				let swLng = swPoint?.lng();
+				let neLat = nePoint?.lat();
+				let neLng = nePoint?.lng();
+				setMapBounds({swLat, swLng, neLat, neLng})
+			}}
 		>
-			{/* Child components, such as markers, info windows, etc. */}
 			{appartments.map(appartment => (
 				<Marker
 					icon={appartment.id === selectedAppartment ? blue_marker : green_marker}
@@ -55,9 +80,7 @@ function Map({ appartments, handleClick, selectedAppartment }) {
 				/>))}
 			<></>
 		</GoogleMap>
-	) : (
-		<></>
-	);
+	) : null;
 }
 
 export default React.memo(Map);

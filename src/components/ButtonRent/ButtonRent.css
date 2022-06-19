@@ -1,8 +1,10 @@
-.button-rent {
-    background-color: rgb(228, 158, 52) !important;
+.ant-btn-primary.button-rent {
+    background-color: rgb(228, 158, 52);
     color: #fff;
+    border: none;
+    border-radius: 20px;
 }
 
-.button-rent:hover {
+.ant-btn-primary.button-rent:hover {
     background-color: rgb(212, 106, 44);
 }
