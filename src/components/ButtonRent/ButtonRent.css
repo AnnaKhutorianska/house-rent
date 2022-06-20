@@ -12,13 +12,3 @@
 .ant-btn-primary.button-rent:focus{
     background: rgb(212, 106, 44);
 }
-
-.button-rent-input-label {
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 5px;
-}
-
-.button-rent-input {
-    margin-bottom: 7px;
-}
