@@ -1,20 +1,22 @@
 import React from 'react';
 import { Alert } from 'antd';
 
-function Notification({ error }) {
-    const onClose = (e) => {
-        console.log(e, 'I was closed.');
-    };
+import './Notification.css';
+
+function Notification({ setIsError }) {
+    function onClose() {
+        setIsError(false);
+    }
 
     return (
         <Alert
             showIcon
-            message="Error Text"
-            description={error}
-            type="error"
+            message='Невірний адрес'
+            description='Перевірте коректність введених даних'
+            type='error'
             closable
             onClose={onClose}
-            style={{textAlign: 'right', direction: 'rtl' , position: 'fixed', width:'100%', zIndex:'1000'}}
+            className='notification'
         />
     )
 }

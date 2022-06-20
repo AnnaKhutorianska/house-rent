@@ -53,5 +53,49 @@ export default [
             lat: 50.4961251,
             lng: 30.4667439
         }
+    },
+    {
+        id: 'LGXMNA_3EanR9XYcpKBNJ',
+        title: 'Здам однокімнатну квартиру Оболонь Рокосовского',
+        image: 'https://ireland.apollo.olxcdn.com/v1/files/oj6my3sna6ys1-UA/image;s=1000x700',
+        price: '750',
+        address: 'просп. Маршала Рокоссовского, 6',
+        coordinates: {
+            lat: 50.5223397,
+            lng: 30.457117
+        }
+    },
+    {
+        id: 'a5JOuPGmyCOWA8L0hPsOb',
+        title: 'Аренда квартиры возле метро Осокорки. Без комиссии.',
+        image: 'https://ireland.apollo.olxcdn.com/v1/files/1df8ciwx9znj1-UA/image;s=516x361',
+        price: '2000',
+        address: 'улица Григория Ващенко, 1, Киев',
+        coordinates: {
+            lat: 50.3906471,
+            lng: 30.6142509
+        }
+    },
+    {
+        id: 'JwsIN5c94UQLR1uJJA7sW',
+        title: 'Современная 3 ком. квартира в новострое.',
+        image: 'https://ireland.apollo.olxcdn.com/v1/files/wbtwfpnwjdxl-UA/image;s=516x361',
+        price: '1500',
+        address: 'вулиця Антоновича, 72, Киев',
+        coordinates: {
+            lat: 50.4265852,
+            lng: 30.5054077
+        }
+    },
+    {
+        id: 'lpP_tpPBfJSdC0REZ4ENs',
+        title: 'Сдается квартира евродвушка',
+        image: 'https://ireland.apollo.olxcdn.com/v1/files/hifz424vbn973-UA/image;s=516x361',
+        price: '500',
+        address: 'ул.Радужная 58, Киев',
+        coordinates: {
+            lat: 50.4768568,
+            lng: 30.5801664
+        }
     }
 ]

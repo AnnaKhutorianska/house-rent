@@ -1,10 +1,24 @@
 .ant-btn-primary.button-rent {
-    background-color: rgb(228, 158, 52);
+     background: rgb(212, 106, 44);;
     color: #fff;
     border: none;
     border-radius: 20px;
 }
 
 .ant-btn-primary.button-rent:hover {
-    background-color: rgb(212, 106, 44);
+    background: rgb(212, 106, 44);
+}
+
+.ant-btn-primary.button-rent:focus{
+    background: rgb(212, 106, 44);
+}
+
+.button-rent-input-label {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.button-rent-input {
+    margin-bottom: 7px;
 }

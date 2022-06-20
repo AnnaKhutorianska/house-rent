@@ -7,7 +7,7 @@ import Notification from '../Notification/Notification';
 
 import './ButtonRent.css';
 
-Geocode.setApiKey('');
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 Geocode.setLanguage("ua");
 Geocode.setRegion("ua");
 Geocode.setLocationType("ROOFTOP");
@@ -15,6 +15,7 @@ Geocode.setLocationType("ROOFTOP");
 function ButtonRent({ setNewAppartment }) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [appartInfo, setAppartInfo] = useState({});
+	const [isError, setIsError] = useState(false);
 
 	function hangleChange(e) {
 		const {name, value} = e.target;
@@ -38,9 +39,7 @@ function ButtonRent({ setNewAppartment }) {
 				setNewAppartment({ ...appartInfo, coordinates: coord, id:nanoid() })
 				setAppartInfo({})
 			})
-			.catch(error => {
-				console.log(error);
-			return <Notification error={error}/>})
+			.catch(error => setIsError(prev => !prev))
 
 		toogleModal();
 	}
@@ -56,8 +55,8 @@ function ButtonRent({ setNewAppartment }) {
 				onOk={handleOk}
 				onCancel={toogleModal}
 			>
-				<div>
-					<p>Короткий опис</p>
+				<div className='button-rent-input'>
+					<p className='button-rent-input-label'>Короткий опис</p>
 					<Input
 						name="title"
 						value={appartInfo.title}
@@ -65,8 +64,8 @@ function ButtonRent({ setNewAppartment }) {
 						placeholder="Input description"
 					/>
 				</div>
-				<div>
-					<p>Ціна за добу</p>
+				<div className='button-rent-input'>
+					<p className='button-rent-input-label'>Ціна за добу</p>
 					<Input
 						name="price"
 						value={appartInfo.price}
@@ -74,8 +73,8 @@ function ButtonRent({ setNewAppartment }) {
 						placeholder="Input price"
 					/>
 				</div>
-				<div>
-					<p>Адреса</p>
+				<div className='button-rent-input'>
+					<p className='button-rent-input-label'>Адреса</p>
 					<Input
 						name="address"
 						value={appartInfo.address}
@@ -84,7 +83,7 @@ function ButtonRent({ setNewAppartment }) {
 					/>
 				</div>
 				<div>
-					<p>Посилання на зображення</p>
+					<p className='button-rent-input-label'>Посилання на зображення</p>
 					<Input
 						name="image"
 						value={appartInfo.image}
@@ -93,6 +92,7 @@ function ButtonRent({ setNewAppartment }) {
 					/>
 				</div>
 			</Modal>
+			{isError && <Notification setIsError={setIsError} />}
 		</>
 	);
 }

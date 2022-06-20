@@ -30,7 +30,7 @@ function AppartmentsList({ appartments, selectedAppartment, mapBounds }) {
 	return (
 		<div className="appartments-list">
 			{checkBounds(sortAppartments(), mapBounds).map((appartment) => (
-				<AppartmentCard appartment={appartment} />
+				<AppartmentCard key={appartment.id} appartment={appartment} />
 			))}
 		</div>
 	);
