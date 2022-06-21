@@ -10,6 +10,7 @@ function Map({ appartments, handleClick, selectedAppartment, setMapBounds, mapCe
 	const { isLoaded } = useJsApiLoader({
 		id: 'google-map-script',
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+		libraries: ['places']
 	});
 
 	const [map, setMap] = useState(null);

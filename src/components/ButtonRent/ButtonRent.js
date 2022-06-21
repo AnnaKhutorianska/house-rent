@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import Geocode from 'react-geocode';
-import { Button, Modal, Input, Form } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Modal, Input, Form, Upload } from 'antd';
+import { Autocomplete } from '@react-google-maps/api';
 
 import Notification from '../Notification/Notification';
 
@@ -13,15 +15,18 @@ Geocode.setRegion('ua');
 Geocode.setLocationType('ROOFTOP');
 
 function ButtonRent({ setNewAppartment }) {
+	const [form] = Form.useForm();
+	const autocomplete = useRef();
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [isError, setIsError] = useState(false);
-	const [form] = Form.useForm();
 
 	function toogleModal() {
 		setIsModalVisible((prev) => !prev);
 	}
 
 	function onCreate(values) {
+		console.log(values);
+
 		Geocode.fromAddress(values.address)
 			.then(response => {
 				const { lat, lng } = response.results[0].geometry.location;
@@ -37,6 +42,8 @@ function ButtonRent({ setNewAppartment }) {
 	}
 
 	function handleOk() {
+		form.setFieldsValue({ address: autocomplete.current.value })
+
 		form
 			.validateFields()
 			.then(values => {
@@ -46,6 +53,14 @@ function ButtonRent({ setNewAppartment }) {
 				console.log('Validate Failed:', info);
 			});
 	}
+
+	const getFile = (e) => {
+		if (Array.isArray(e)) {
+		  return e[0];
+		}
+
+	   return e && e.fileList[0];
+	};
 
 	return (
 		<>
@@ -104,9 +119,9 @@ function ButtonRent({ setNewAppartment }) {
 							},
 						]}
 					>
-						<Input
-							placeholder='Input address'
-						/>
+						<Autocomplete>
+							<input ref={autocomplete} placeholder='Input address' />
+						</Autocomplete>
 					</Form.Item>
 
 					<Form.Item
@@ -115,13 +130,14 @@ function ButtonRent({ setNewAppartment }) {
 						rules={[
 							{
 								required: true,
-								message: 'Додайте посилання на зображення',
+								message: 'Додайте зображення',
 							},
 						]}
+						getValueFromEvent={getFile}
 					>
-						<Input
-							placeholder='Input image'
-						/>
+						<Upload multiple={false} beforeUpload={() => false} accept='.jpg,.png,.jpeg'>
+							<Button icon={<UploadOutlined />}>Click to upload</Button>
+						</Upload>
 					</Form.Item>
 				</Form>
 			</Modal>
