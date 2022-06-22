@@ -12,3 +12,28 @@
 .ant-btn-primary.button-rent:focus{
     background: rgb(212, 106, 44);
 }
+
+.pac-target-input {
+    width: 100%;
+    padding: 4px 11px;
+    font-size: 14px;
+    line-height: 1.5715;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    transition-duration: 0.4s;
+}
+
+.pac-target-input::placeholder {
+    color: #cccccc;
+}
+
+.pac-target-input:hover {
+   border-color:#1890ff;
+}
+
+.pac-target-input:focus {
+    outline: none !important;
+    border:1px solid #1890ff;
+    box-shadow: 0px 0px 0px 2px rgba(24,144,255,0.20);
+}

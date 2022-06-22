@@ -21,29 +21,24 @@ function ButtonRent({ setNewAppartment }) {
 	const [isError, setIsError] = useState(false);
 
 	function toogleModal() {
+		form.resetFields();
 		setIsModalVisible((prev) => !prev);
 	}
 
 	function onCreate(values) {
-		console.log(values);
-
 		Geocode.fromAddress(values.address)
 			.then(response => {
 				const { lat, lng } = response.results[0].geometry.location;
 				return { lat, lng };
 			})
-			.then(coord => {
-				setNewAppartment({ ...values, coordinates: coord, id: nanoid() });
-				form.resetFields();
+			.then(coordinates => {
+				setNewAppartment({ ...values, coordinates, id: nanoid() });
 				toogleModal();
 			})
-			.catch(() => setIsError(prev => !prev))
-
+			.catch(() => setIsError(prev => !prev));
 	}
 
 	function handleOk() {
-		form.setFieldsValue({ address: autocomplete.current.value })
-
 		form
 			.validateFields()
 			.then(values => {
@@ -54,13 +49,17 @@ function ButtonRent({ setNewAppartment }) {
 			});
 	}
 
-	const getFile = (e) => {
+	function onPlaceChanged() {
+		form.setFieldsValue({ address: autocomplete.current.value });
+	}
+
+	function getFile(e) {
 		if (Array.isArray(e)) {
 		  return e[0];
 		}
 
 	   return e && e.fileList[0];
-	};
+	}
 
 	return (
 		<>
@@ -84,7 +83,7 @@ function ButtonRent({ setNewAppartment }) {
 						rules={[
 							{
 								required: true,
-								message: 'Додайте опис',
+								message: 'Обов\'язкове поле',
 							},
 						]}
 					>
@@ -99,7 +98,7 @@ function ButtonRent({ setNewAppartment }) {
 						rules={[
 							{
 								required: true,
-								message: 'Додайте ціну',
+								message: 'Обов\'язкове поле',
 							},
 						]}
 					>
@@ -115,22 +114,22 @@ function ButtonRent({ setNewAppartment }) {
 						rules={[
 							{
 								required: true,
-								message: 'Додайте адресу',
+								message: 'Обов\'язкове поле',
 							},
 						]}
 					>
-						<Autocomplete>
+						<Autocomplete onPlaceChanged={onPlaceChanged}>
 							<input ref={autocomplete} placeholder='Input address' />
 						</Autocomplete>
 					</Form.Item>
 
 					<Form.Item
 						name='image'
-						label='image'
+						label='Зображення'
 						rules={[
 							{
 								required: true,
-								message: 'Додайте зображення',
+								message: 'Обов\'язкове поле',
 							},
 						]}
 						getValueFromEvent={getFile}
